@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import axios from 'axios';
 import { format } from 'timeago.js';
-
 // MUI ~ Imports
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
-
+import Register from './components/Register';
+import Login from './components/Login';
 // Styles ~ Import
 import {
   StyledCard,
@@ -14,15 +14,30 @@ import {
   StyledDesc,
   StyledStar,
   StyledUsername,
-  StyledDate
+  StyledDate,
+  StyledForm,
+  StyledInput,
+  StyledInputPlaceHolder,
+  StyledTextArea,
+  StyledSubmitButton,
+  StyledButton,
+  LogoutButton,
+  LoginButton,
+  RegisterButton
 } from './styles';
 
 function App() {
+  const myStorage = window.localStorage;
   // States ~
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [currentUser, setCurrentUser] = useState(myStorage.getItem('user'));
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
-  const currentUser = 'Sarah';
+  const [title, setTitle] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [rating, setRating] = useState(0);
 
   // Gloabal map viewport ~ useState
   const [viewport, setViewport] = useState({
@@ -32,19 +47,6 @@ function App() {
     longitude: -79.3832,
     zoom: 4
   });
-
-  // Async Await Get Request (UseEffect ~ Hook)
-  useEffect(() => {
-    const getPins = async () => {
-      try {
-        const res = await axios.get('/pins');
-        setPins(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getPins();
-  }, []);
 
   // Handler ~ (Functions)
 
@@ -61,6 +63,44 @@ function App() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newPin = {
+      username: currentUser,
+      title,
+      desc,
+      rating,
+      lat: newPlace.lat,
+      long: newPlace.long
+    };
+
+    try {
+      const res = await axios.post('/pins', newPin);
+      setPins([...pins, res.data]);
+      setNewPlace(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    myStorage.removeItem('user');
+  };
+
+  // Async Await Get Request (UseEffect ~ Hook)
+  useEffect(() => {
+    const getPins = async () => {
+      try {
+        const res = await axios.get('/pins');
+        setPins(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getPins();
+  }, []);
+
   return (
     <div className="App">
       <ReactMapGL
@@ -73,7 +113,12 @@ function App() {
       >
         {pins.map((p) => (
           <>
-            <Marker latitude={p.lat} longitude={p.long} offsetLeft={-20} offsetTop={-10}>
+            <Marker
+              latitude={p.lat}
+              longitude={p.long}
+              offsetLeft={-viewport.zoom * 3.5}
+              offsetTop={-viewport.zoom * 7}
+            >
               <LocationOnIcon
                 style={{
                   fontSize: viewport.zoom * 4,
@@ -98,13 +143,7 @@ function App() {
                   <StyledLabel>Review</StyledLabel>
                   <StyledDesc>{p.desc}</StyledDesc>
                   <StyledLabel>Rating</StyledLabel>
-                  <StyledStar>
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                  </StyledStar>
+                  <StyledStar>{Array(p.rating).fill(<StarIcon className="star" />)}</StyledStar>
                   <StyledLabel>Information</StyledLabel>
                   <StyledUsername>
                     Created by <b>{p.username}</b>
@@ -124,10 +163,52 @@ function App() {
             onClose={() => setNewPlace(null)}
             anchor="left"
           >
-            hello
+            <div>
+              <StyledForm onSubmit={handleSubmit}>
+                <StyledLabel>Title</StyledLabel>
+                <StyledInputPlaceHolder>
+                  <StyledInput
+                    placeholder="Enter a title"
+                    autoFocus
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </StyledInputPlaceHolder>
+                <StyledLabel>Description</StyledLabel>
+                <StyledInputPlaceHolder>
+                  <StyledTextArea
+                    placeholder="Say us something about this place."
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                </StyledInputPlaceHolder>
+                <StyledLabel>Rating</StyledLabel>
+                <select onChange={(e) => setRating(e.target.value)}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <StyledSubmitButton type="submit" className="submitButton">
+                  Add Pin
+                </StyledSubmitButton>
+              </StyledForm>
+            </div>
           </Popup>
         )}
+        {currentUser ? (
+          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+        ) : (
+          <StyledButton>
+            <LoginButton onClick={() => setShowLogin(true)}>Login</LoginButton>
+            <RegisterButton onClick={() => setShowRegister(true)}>Register</RegisterButton>
+          </StyledButton>
+        )}
       </ReactMapGL>
+      {showRegister && <Register setShowRegister={setShowRegister} />}
+      {showLogin && (
+        <Login setShowLogin={setShowLogin} myStorage={myStorage} setCurrentUser={setCurrentUser} />
+      )}
+      {console.log(setShowRegister)};
     </div>
   );
 }
