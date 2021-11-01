@@ -22,7 +22,7 @@ export const StyledLogo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: slateblue;
+  color: hsl(4, 96%, 64%);
   font-weight: 700;
 `;
 
@@ -46,14 +46,14 @@ export const StyledButton = styled.button`
   border: none;
   border-radius: 5px;
   padding: 12px 35%;
-  background-color: teal;
-  color: white;
+  background-color: hsl(179, 96%, 29%);
+  color: hsl(0, 0%, 100%);
   cursor: pointer;
   margin-top: 10px;
 `;
 
 export const WrongSpan = styled.span`
-  color: red;
+  color: hsl(0, 100%, 50%);
   font-size: 12px;
   text-align: center;
   margin: 5px 0;

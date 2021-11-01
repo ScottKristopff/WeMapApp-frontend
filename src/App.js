@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import axios from 'axios';
 import { format } from 'timeago.js';
+import { Boop } from './components/Animations/Boop';
 // MUI ~ Imports
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
@@ -11,6 +12,7 @@ import Login from './components/Login';
 import {
   StyledCard,
   StyledLabel,
+  StyledTitle,
   StyledDesc,
   StyledStar,
   StyledUsername,
@@ -108,7 +110,7 @@ function App() {
         mapboxApiAccessToken="pk.eyJ1Ijoic2twZXNzb2EiLCJhIjoiY2t2OGxmc2plOXV6YTJ1bzg2Nzg4c2Y1YiJ9.eFzRYNz12Ij6L9g85YzgeA"
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         onDblClick={handleAddClick}
-        /* mapStyle="" */
+        mapStyle="mapbox://styles/skpessoa/ckvh62t5o0yxt14ru8cx7astc"
         /* transitionDuration="50" */
       >
         {pins.map((p) => (
@@ -119,14 +121,16 @@ function App() {
               offsetLeft={-viewport.zoom * 3.5}
               offsetTop={-viewport.zoom * 7}
             >
-              <LocationOnIcon
-                style={{
-                  fontSize: viewport.zoom * 4,
-                  color: p.username === currentUser ? 'tomato' : 'slateblue',
-                  cursor: 'pointer'
-                }}
-                onClick={() => handleMarkerClick(p._id, p.lat, p.long)}
-              />
+              <Boop x={0} y={-10}>
+                <LocationOnIcon
+                  style={{
+                    fontSize: viewport.zoom * 4,
+                    color: p.username === currentUser ? 'hsl(4, 96%, 64%)' : 'hsl(198, 96%, 37%)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => handleMarkerClick(p._id, p.lat, p.long)}
+                />
+              </Boop>
             </Marker>
             {p._id === currentPlaceId && (
               <Popup
@@ -134,12 +138,12 @@ function App() {
                 longitude={p.long}
                 closeButton={true}
                 closeOnClick={false}
-                anchor="top"
+                anchor="left"
                 onClose={() => setCurrentPlaceId(null)}
               >
                 <StyledCard>
                   <StyledLabel>Place</StyledLabel>
-                  <h4>{p.title}</h4>
+                  <StyledTitle>{p.title}</StyledTitle>
                   <StyledLabel>Review</StyledLabel>
                   <StyledDesc>{p.desc}</StyledDesc>
                   <StyledLabel>Rating</StyledLabel>

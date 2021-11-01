@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   height: 280px;
   padding: 20px;
   border-radius: 10px;
-  background-color: white;
+  background-color: hsl(0, 0%, 100%);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -22,7 +22,7 @@ export const StyledLogo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: slateblue;
+  color: hsl(4, 96%, 64%);
   font-weight: 700;
 `;
 
@@ -46,20 +46,20 @@ export const StyledButton = styled.button`
   border: none;
   border-radius: 5px;
   padding: 10px 32%;
-  background-color: slateblue;
-  color: white;
+  background-color: hsl(232, 96%, 69%);
+  color: hsl(0, 0%, 100%);
   cursor: pointer;
   margin-top: 10px;
 `;
 
 export const SuccessSpan = styled.span`
-  color: green;
+  color: hsl(120, 100%, 25%);
   margin: 25px;
   font-size: 12px;
   text-align: center;
 `;
 export const WrongSpan = styled.span`
-  color: red;
+  color: hsl(0, 100%, 50%);
   font-size: 12px;
   text-align: center;
 `;
