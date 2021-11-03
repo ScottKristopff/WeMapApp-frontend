@@ -110,7 +110,7 @@ function App() {
         mapboxApiAccessToken="pk.eyJ1Ijoic2twZXNzb2EiLCJhIjoiY2t2OGxmc2plOXV6YTJ1bzg2Nzg4c2Y1YiJ9.eFzRYNz12Ij6L9g85YzgeA"
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         onDblClick={handleAddClick}
-        mapStyle="mapbox://styles/skpessoa/ckvh62t5o0yxt14ru8cx7astc"
+        mapStyle="mapbox://styles/skpessoa/ckvinfkgh80ui14pbizblzehw"
         /* transitionDuration="50" */
       >
         {pins.map((p) => (

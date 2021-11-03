@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { Mobile } from './reponsive';
 
 export const StyledCard = styled.div`
   width: 300px;
@@ -98,33 +99,45 @@ export const StyledButton = styled.div`
 
 export const RegisterButton = styled.button`
   border: none;
-  padding: 5px;
+  padding: 10px 20px;
   border-radius: 5px;
   color: hsl(0, 0%, 100%);
   background-color: hsl(232, 96%, 69%);
   cursor: pointer;
   margin-right: 10px;
+  margin-top: 15px;
+  font-size: 16px;
+
+  ${Mobile({
+    padding: '5px 10px'
+  })};
 `;
 
 export const LoginButton = styled.button`
   border: none;
-  padding: 5px;
+  padding: 10px 20px;
   border-radius: 5px;
   color: hsl(0, 0%, 100%);
   background-color: hsl(179, 96%, 29%);
   cursor: pointer;
   margin: 0 15px;
+  font-size: 16px;
+  ${Mobile({
+    padding: '5px 10px'
+  })};
 `;
 
 export const LogoutButton = styled.button`
   border: none;
-  padding: 5px;
+  padding: 10px 20px;
   border-radius: 5px;
   color: hsl(0, 0%, 100%);
   background-color: hsl(4, 96%, 64%);
   position: absolute;
-  /*   top: 0px;
-  right: 0px; */
   cursor: pointer;
-  margin: 10px 15px;
+  margin: 25px 15px;
+  font-size: 16px;
+  ${Mobile({
+    padding: '5px 10px'
+  })};
 `;

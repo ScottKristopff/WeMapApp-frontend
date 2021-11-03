@@ -1,8 +1,9 @@
 import styled from 'styled-components/macro';
+import { Mobile } from '../../reponsive';
 
 export const Wrapper = styled.div`
-  width: 300px;
-  height: 200px;
+  width: 600px;
+  height: 300px;
   padding: 20px;
   border-radius: 10px;
   background-color: white;
@@ -16,6 +17,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  ${Mobile({
+    width: '250px',
+    height: '250px'
+  })}
 `;
 
 export const StyledLogo = styled.div`
@@ -24,6 +30,11 @@ export const StyledLogo = styled.div`
   justify-content: center;
   color: hsl(4, 96%, 64%);
   font-weight: 700;
+  font-size: 30px;
+
+  ${Mobile({
+    fontSize: '18px'
+  })}
 `;
 
 export const StyledForm = styled.form`
@@ -40,23 +51,36 @@ export const StyledInput = styled.input`
   border-bottom: 1px solid gray;
   margin: 15px 0;
   width: 80%;
+  font-size: 16px;
+  padding: 10px 0;
+  padding-left: 10px;
+
+  ${Mobile({
+    padding: '0',
+    paddingLeft: '10px'
+  })}
 `;
 
 export const StyledButton = styled.button`
   border: none;
   border-radius: 5px;
-  padding: 12px 35%;
+  padding: 18px 37%;
   background-color: hsl(179, 96%, 29%);
   color: hsl(0, 0%, 100%);
   cursor: pointer;
   margin-top: 10px;
+  font-size: 18px;
+
+  ${Mobile({
+    padding: '12px 33%'
+  })}
 `;
 
 export const WrongSpan = styled.span`
   color: hsl(0, 100%, 50%);
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
-  margin: 5px 0;
+  margin: 15px 0;
 `;
 
 export const StyledSpan = styled.span``;
